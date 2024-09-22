@@ -40,9 +40,11 @@ def extract_text_files(directory):
     output_filename = f"{os.path.basename(
         directory.rstrip(os.sep))}_all_text_files.txt"
 
-    # Get a list of all files in the given directory, excluding the output file
-    all_files = [f for f in os.listdir(directory) if os.path.isfile(
-        os.path.join(directory, f)) and f != output_filename]
+    # Get a list of all files in the given directory, excluding the output file and .env files
+    all_files = [f for f in os.listdir(directory)
+                 if os.path.isfile(os.path.join(directory, f))
+                 and f != output_filename
+                 and not f.endswith('.env')]
 
     # Open the output file in write mode with UTF-8 encoding, ignoring encoding errors
     with open(output_filename, 'w', encoding='utf-8', errors='ignore') as outfile:
