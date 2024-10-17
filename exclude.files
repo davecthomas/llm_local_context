@@ -1,5 +1,4 @@
-# file output
-*.txt
+.git
 # Log files
 *.log
 *.log.*
