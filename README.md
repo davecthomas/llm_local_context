@@ -1,8 +1,14 @@
 # LLM Local Context - Text File Extractor for Project Context
 
-Wish you had a quick way to give your friendly LLM full context for all the files you are working with? Look no more!
+Wish you had a quick way to give your friendly LLM full context for all the files you are working with?
+Are you packaging up your project code as zip files and uploading to your LLM? Eew!
+Tired of waiting for GitHub Copilot to have true project-wide context? Look no more!!
 
-This script extracts the contents of all text-based files in a given directory and consolidates them into a single file (`<directory>_all_text_files.txt`). This is particularly useful when working with large projects and you want to provide project context to a Language Learning Model (LLM) without needing to upload an entire ZIP archive of the project files.
+This script extracts the contents of all text-based files in a given directory and consolidates them into a single file (`<directory>_all_text_files.txt`) and your local clipboard. This is particularly useful when working with large projects and you want to provide project context to a Language Learning Model (LLM) without needing to upload an entire ZIP archive of the project files.
+
+## Typical Scenario
+
+You have updated your project code a ton and have a big new question to present to your favorite LLM. Use this tool to grab all the code into your clipboard and them prompt the LLM with "Here's my current code. Analyze it and then I'll have a big new feature to add with you..." (then you paste the contents and go!)
 
 ## Input
 
@@ -18,7 +24,7 @@ The script accepts the directory path in two ways:
 
 - The script checks each file in the directory to determine if it's a text file.
 - Binary files (or files that can't be decoded as UTF-8) are automatically skipped.
-- The contents of all text files are concatenated and written to `all_text_files.txt` in a readable format, with clear separation between the content of each file.
+- The contents of all text files are concatenated and written to `all_text_files.txt` in a readable format, with clear separation between the content of each file. It is also dropped into your clipboard.
 
 ## Use Case
 
