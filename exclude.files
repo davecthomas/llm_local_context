@@ -9,9 +9,6 @@ __pycache__/
 # ignore output files
 *.csv
 
-# ignore prompt history
-history.json
-
 # Ignore the virtual environment
 venv/
 
@@ -29,7 +26,7 @@ Pipfile
 .vscode/
 
 # Ignore any local settings or configuration files
-config.json
+*.json
 
 # Ignore any local development or testing data
 data/

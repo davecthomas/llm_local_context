@@ -4,7 +4,7 @@ Wish you had a quick way to give your friendly LLM full context for all the file
 Are you packaging up your project code as zip files and uploading to your LLM? Eew!
 Tired of waiting for GitHub Copilot to have true project-wide context? Look no more!!
 
-This script extracts the contents of all text-based files in a given directory and consolidates them into a single file (`<directory>_all_text_files.txt`) and your local clipboard. This is particularly useful when working with large projects and you want to provide project context to a Language Learning Model (LLM) without needing to upload an entire ZIP archive of the project files.
+This script recursively scans and extracts the contents of all text-based files in a given directory tree and consolidates them into a single file (`<directory>_all_text_files.txt`) and your local clipboard. This is particularly useful when working with large projects and you want to provide project context to a Language Learning Model (LLM) without needing to upload an entire ZIP archive of the project files.
 
 ## Typical Scenario
 
@@ -32,10 +32,47 @@ When you want to provide project context to an LLM (such as OpenAI's GPT) for co
 
 ## Features
 
+- **Exclude Files:** Uses the same approach as .gitignore to make it easy to just copy that over as `exclude.files`.
 - **Binary Detection:** Skips binary files by checking for null bytes and decoding errors.
 - **UTF-8 Support:** Handles UTF-8 encoded files and ignores encoding errors where necessary.
 - **Error Handling:** Catches permission and decoding errors gracefully.
 - **Single Output File:** All text file contents are neatly organized in `all_text_files.txt` for easy processing.
+
+### Excluding Files and Directories
+
+This tool leverages an exclusion mechanism to filter out files and directories that you don't want to include in the consolidated output. The exclusion patterns are specified in an `exclude.files` file located in the project root (or a specified path).
+
+### How It Works
+
+- **Loading Exclusion Patterns:**  
+  The script reads the `exclude.files` file line by line using the `load_excluded_patterns()` function.
+
+  - Blank lines and lines starting with `#` (comments) are ignored.
+  - Each non-comment line is treated as a pattern.
+  - Works just like .gitignore
+
+- **Pattern Matching:**  
+  The patterns support Unix shell-style wildcards (e.g., `*.log`, `*.pyc`) and can target directories by including a trailing slash (e.g., `venv/`, `__pycache__/`).  
+  These patterns are applied using Python's `fnmatch` module to determine if a file or directory should be excluded.
+
+- **Application During Scanning:**  
+  During the recursive directory traversal:
+  - Directories that match any exclusion pattern are skipped, preventing further recursion into them.
+  - Files that match any pattern are ignored, ensuring that only relevant text-based files are included.
+
+### Example `exclude.files`
+
+````text
+.git
+# Log files
+*.log
+*.log.*
+*.pyc
+__pycache__/
+venv/
+# Ignore configuration files
+.config
+
 
 ## Installation
 
@@ -47,4 +84,4 @@ When you want to provide project context to an LLM (such as OpenAI's GPT) for co
 ```bash
 python3 -m venv venv
 source venv/bin/activate
-```
+````
