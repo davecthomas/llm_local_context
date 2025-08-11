@@ -5,12 +5,14 @@
 # Ignore Python compiled files
 *.pyc
 __pycache__/
+poetry.lock
 
 # ignore output files
 *.csv
 
 # Ignore the virtual environment
 venv/
+.venv/
 
 # Ignore the Pipenv and Pipfile.lock files
 Pipfile.lock
